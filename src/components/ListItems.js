@@ -19,30 +19,23 @@ const ListItems = () => {
   return (
     <>
       <div className="listitems">ListItems</div>
-      {loading ? (
-        <h1>loading</h1>
-      ) : (
-        <div>
-          {data.recipes &&
-            data.recipes.map((item) => {
-              return (
-                <ul>
-                  <li key={item.recipe_id}>
-                    <a href={item.recipeInstructions_url}>{item.name}</a>
-                  </li>
-                </ul>
-              );
-            })}
-        </div>
-      )}
 
       {loading ? (
         <h1>loading</h1>
       ) : (
-        <div>
+        <div class="dashboard-container">
           {data.recipes &&
             data.recipes.map((item) => {
-              return <ImgMediaCard image={item.image} name={item.name} />;
+              return (
+                <ImgMediaCard
+                  key={item.recipe_id}
+                  image={item.image}
+                  name={item.name}
+                  description={item.description}
+                  ingredients={item.recipeIngredient}
+                  instructionsUrl={item.recipeInstructions_url}
+                />
+              );
             })}
         </div>
       )}
