@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import ImgMediaCard from './ImgMediaCard';
 import RecipeReviewCard from './RecipeReviewCard';
+import { RecipeContext } from '../context/RecipeContext';
 
 const ListItems = () => {
+  const recipes = useContext(RecipeContext);
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState({ recipes: [] });
 
@@ -24,12 +26,13 @@ const ListItems = () => {
       {loading ? (
         <h1>loading</h1>
       ) : (
-        <div class="dashboard-container">
+        <div className="dashboard-container">
           {data.recipes &&
             data.recipes.map((item) => {
               return (
                 <RecipeReviewCard
                   key={item.recipe_id}
+                  recipe_id={item.recipe_id}
                   image={item.image}
                   name={item.name}
                   description={item.description}

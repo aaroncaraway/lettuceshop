@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Box from '@material-ui/core/Box';
@@ -19,6 +19,8 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+
+import { DispatchContext } from '../context/RecipeContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function RecipeReviewCard({
+  recipe_id,
   image,
   name,
   description,
@@ -55,6 +58,7 @@ export default function RecipeReviewCard({
   author_name,
   itemSelected,
 }) {
+  const dispatch = useContext(DispatchContext);
   console.log(image, name, author_name);
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
@@ -97,7 +101,17 @@ export default function RecipeReviewCard({
               aria-label="recipe"
               className={classes.avatar}
               onClick={() => {
-                handleSelectClick();
+                dispatch({
+                  type: 'ADD',
+                  recipe_id,
+                  name,
+                  recipe_object: {
+                    formattedImage,
+                    author_name,
+                    description,
+                    formattedIngredients,
+                  },
+                });
               }}
             >
               {button}
