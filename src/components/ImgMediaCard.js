@@ -26,7 +26,6 @@ export default function ImgMediaCard({
   const classes = useStyles();
   const formattedImage = image.split("'")[1].split("'")[0];
 
-  console.log(instructionsUrl);
   return (
     <Box m={2}>
       <Card className={classes.root}>

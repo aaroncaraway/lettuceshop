@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ImgMediaCard from './ImgMediaCard';
+import RecipeReviewCard from './RecipeReviewCard';
 
 const ListItems = () => {
   const [loading, setLoading] = useState(true);
@@ -27,7 +28,7 @@ const ListItems = () => {
           {data.recipes &&
             data.recipes.map((item) => {
               return (
-                <ImgMediaCard
+                <RecipeReviewCard
                   key={item.recipe_id}
                   image={item.image}
                   name={item.name}
