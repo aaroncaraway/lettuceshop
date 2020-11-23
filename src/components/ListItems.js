@@ -36,7 +36,16 @@ const ListItems = () => {
         </div>
       )}
 
-      <ImgMediaCard />
+      {loading ? (
+        <h1>loading</h1>
+      ) : (
+        <div>
+          {data.recipes &&
+            data.recipes.map((item) => {
+              return <ImgMediaCard image={item.image} name={item.name} />;
+            })}
+        </div>
+      )}
     </>
   );
 };
