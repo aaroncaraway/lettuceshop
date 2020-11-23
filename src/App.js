@@ -1,11 +1,9 @@
-import React from "react";
-import "./App.css";
-import LettuceShopApp from './components/LettuceShopApp'
+import React from 'react';
+import './App.css';
+import LettuceShopApp from './components/LettuceShopApp';
 
 function App() {
-  return (
-    <LettuceShopApp />
-  );
+  return <LettuceShopApp />;
 }
 
 export default App;
