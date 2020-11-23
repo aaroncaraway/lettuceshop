@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Box from '@material-ui/core/Box';
@@ -11,11 +11,14 @@ import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
+import { red, grey } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,28 +40,67 @@ const useStyles = makeStyles((theme) => ({
     transform: 'rotate(180deg)',
   },
   avatar: {
+    backgroundColor: grey[500],
+  },
+  avatarSelected: {
     backgroundColor: red[500],
   },
 }));
 
-export default function RecipeReviewCard({ image, name }) {
-  console.log(image, name);
+export default function RecipeReviewCard({
+  image,
+  name,
+  description,
+  ingredients,
+  author_name,
+  itemSelected,
+}) {
+  console.log(image, name, author_name);
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const [selected, setSelected] = useState(itemSelected);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
+  const handleSelectClick = () => {
+    setSelected(!selected);
+  };
   const formattedImage = image.split("'")[1].split("'")[0];
 
+  const cleanedIngredients = ingredients.replace(/'/g, '"');
+  const formattedIngredients = JSON.parse(cleanedIngredients);
+  console.log(formattedIngredients);
+
+  const isSelected = selected;
+  let button;
+  if (isSelected) {
+    button = (
+      <IconButton aria-label="settings">
+        <CheckCircleIcon />
+      </IconButton>
+    );
+  } else {
+    button = (
+      <IconButton aria-label="settings">
+        <CheckCircleOutlineIcon />
+      </IconButton>
+    );
+  }
   return (
     <Box m={2}>
       <Card className={classes.root}>
         <CardHeader
           avatar={
-            <Avatar aria-label="recipe" className={classes.avatar}>
-              R
+            <Avatar
+              aria-label="recipe"
+              className={classes.avatar}
+              onClick={() => {
+                handleSelectClick();
+              }}
+            >
+              {button}
             </Avatar>
           }
           action={
@@ -67,7 +109,7 @@ export default function RecipeReviewCard({ image, name }) {
             </IconButton>
           }
           title={name}
-          subheader="September 14, 2016"
+          subheader={author_name}
         />
         <CardMedia
           className={classes.media}
@@ -76,9 +118,7 @@ export default function RecipeReviewCard({ image, name }) {
         />
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
-            This impressive paella is a perfect party dish and a fun meal to
-            cook together with your guests. Add 1 cup of frozen peas along with
-            the mussels, if you like.
+            {description}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
@@ -102,10 +142,11 @@ export default function RecipeReviewCard({ image, name }) {
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
             <Typography paragraph>Method:</Typography>
-            <Typography paragraph>
-              Heat 1/2 cup of the broth in a pot until simmering, add saffron
-              and set aside for 10 minutes.
-            </Typography>
+            {formattedIngredients &&
+              formattedIngredients.map((ingredient) => (
+                <Typography paragraph>{ingredient}</Typography>
+              ))}
+
             <Typography paragraph>
               Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet
               over medium-high heat. Add chicken, shrimp and chorizo, and cook,

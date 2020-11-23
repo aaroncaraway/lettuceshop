@@ -35,6 +35,8 @@ const ListItems = () => {
                   description={item.description}
                   ingredients={item.recipeIngredient}
                   instructionsUrl={item.recipeInstructions_url}
+                  author_name={item.author_name}
+                  itemSelected={false}
                 />
               );
             })}
