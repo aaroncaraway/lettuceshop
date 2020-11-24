@@ -8,6 +8,7 @@ const recipeReducer = (state, action) => {
         {
           id: uuid(),
           recipe_id: action.recipe_id,
+          internal_id: action.internal_id,
           name: action.name,
           recipe_object: action.recipe_object,
           selected: true,
@@ -16,15 +17,18 @@ const recipeReducer = (state, action) => {
     case 'REMOVE':
       return state.filter((recipe) => recipe.id !== action.id);
     case 'TOGGLE':
-      console.log('GETTING HERE TOGGLE!', state);
+      // QUESTION: Test to see if in array here?
+      // const existsInArray = state.some(
+      //   (recipe) => recipe.internal_id === action.internal_id
+      // );
+      // if (existsInArray) {
+      //   console.log('exists in array!');
+      //   return state;
+      // }
       return state.map((recipe) =>
         recipe.id === action.id
           ? { ...recipe, selected: !recipe.selected }
           : recipe
-      );
-    case 'UPDATE':
-      return state.map((recipe) =>
-        recipe.id === action.id ? { ...recipe, task: action.newTask } : recipe
       );
     default:
       return state;

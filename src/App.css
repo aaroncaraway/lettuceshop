@@ -8,7 +8,8 @@ body {
 }
 
 .dashboard {
-  border: 4px solid orange;
+  /* border: 4px solid orange; */
+  border: 1px solid transparent;
 }
 
 .dashboard-container {

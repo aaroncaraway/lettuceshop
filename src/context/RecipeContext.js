@@ -1,6 +1,5 @@
 import React, { createContext } from 'react';
 import recipeReducer from '../reducers/recipeReducer';
-// import useTodos from "../hooks/useTodoState";
 import useLocalStorageReducer from '../hooks/useLocalStorageReducer';
 
 export const RecipeContext = createContext();
@@ -18,8 +17,7 @@ export const RecipeProvider = (props) => {
     defaultRecipes,
     recipeReducer
   );
-  // const [todos, dispatch] = useReducer(todoReducer, defaultTodos);
-  // const todoStuff = useTodos(defaultTodos);
+
   return (
     <RecipeContext.Provider value={recipes}>
       <DispatchContext.Provider value={dispatch}>
